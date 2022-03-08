@@ -25,36 +25,154 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% block homeActive %}{% endblock homeActive %}" aria-current="page" href="/">Home</a>
+                        <a class="nav-link {% block homeActive %}{% endblock homeActive %}" aria-current="page"
+                            href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block aboutActive %}{% endblock aboutActive %}" aria-current="page" href="/about">About</a>
+                        <a class="nav-link {% block aboutActive %}{% endblock aboutActive %}" aria-current="page"
+                            href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block blogActive %}{% endblock blogActive %}" aria-current="page" href="/blog">Blog</a>
+                        <a class="nav-link {% block blogActive %}{% endblock blogActive %}" aria-current="page"
+                            href="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block contactActive %}{% endblock contactActive %}" aria-current="page" href="/contact">Contact</a>
+                        <a class="nav-link {% block contactActive %}{% endblock contactActive %}" aria-current="page"
+                            href="/contact">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/admin/">Admin</a>
                     </li>
                 </ul>
                 <form class="d-flex" method="get" action="/search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"
+                        id="query">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav mx-2">
+                    <li>
+                        <div class="btn-group dropstart">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{request.user}}
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout/">Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            {% else %}
+            <!-- Button to trigger login modal -->
+            <button type="button" class="btn btn-outline-success mx-2" data-bs-toggle="modal"
+                data-bs-target="#loginModal">
+                Login
+            </button>
+            <!-- Button to trigger signup modal -->
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signupModal">
+                Sign Up
+            </button>
+            {% endif %}
         </div>
     </nav>
+
+
     {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endfor %}
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModal">Sign Up Here</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <form action="/signup/" method='post'>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Choose a unique username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                    placeholder="Enter Your First Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                    placeholder="Enter Your Last Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="name@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass1">Create a password</label>
+                                <input type="password" class="form-control" id="pass1" name="pass1"
+                                    placeholder="Choose Your Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass2">Confirm Password</label>
+                                <input type="password" class="form-control" id="pass2" name="pass2"
+                                    placeholder="Enter your password again" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary my-2">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModal">Login Please!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/login/" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                placeholder="Choose a unique username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Enter your password </label>
+                            <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                                placeholder="Enter your password " required>
+                        </div>
+                        <button type="submit" class="btn btn-primary my-3">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {% block body %}
     {% endblock body %}
+
+
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

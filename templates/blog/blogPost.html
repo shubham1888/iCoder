@@ -4,29 +4,22 @@
 {% block blogActive %}active{% endblock blogActive %}
 {% block body %}
 <div class="container my-3">
-    <h2>Search results : </h2>
-    {% for post in allPosts  %}
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">Article  by {{post.author}}</strong>
-            <h3 class="mb-0">{{post.title}}</h3>
-            <div class="mb-1 text-muted">{{post.datetime}}</div>
-            <p class="card-text mb-auto">{{post.content| truncatechars:500}}</p>
-            <div class="my-2">
-            	<a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
-            </div>
-            
-        </div>
-        <div class="col-auto d-none d-lg-block">
-            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
-        </div>
-        </div>
-
-        {% endfor %}
+    <button type="button" class="btn btn-dark" onclick="goback()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        </svg>
+    </button>
+    
+</div>
+<div class="container my-3">
+    <div class="blog-post">
+            <h2 class="blog-post-title">{{post.title}}</h2>
+            <p class="blog-post-meta">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
+    
+            <p>{{post.content}}</p>
+            <hr>
     </div>
+</div>
 <script>
     function goback(){
         window.history.back();
