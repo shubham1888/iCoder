@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig', 
     'blog.apps.BlogConfig',
+    'django.contrib.humanize', 
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static"),
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -131,6 +136,7 @@ MESSAGE_TAGS = {
     messages.ERROR:'danger',
     messages.SUCCESS:'success'
 }
+
 
 
 # code for heroku -->
