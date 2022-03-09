@@ -52,16 +52,13 @@
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav mx-2">
                     <li>
-                        <div class="btn-group dropstart">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {{request.user}}
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Menu item</a></li>
-                                <li><a class="dropdown-item" href="#">Menu item</a></li>
-                                <li><a class="dropdown-item" href="#">Menu item</a></li>
-                                <li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                <li><a class="dropdown-item active" href="#">Profile</a></li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="/logout/">Logout</a></li>
