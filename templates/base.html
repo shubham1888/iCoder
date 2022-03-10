@@ -43,6 +43,12 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/admin/">Admin</a>
                     </li>
+                    <!-- Button to trigger dashboard modal -->
+                    <li class="nav-item">
+                        <a class="nav-link {% block dashboardActive %}{% endblock dashboardActive %}"
+                            aria-current="page" href="/dashboard" data-bs-toggle="modal"
+                            data-bs-target="#dashboardModal">Dashboard</a>
+                    </li>
                 </ul>
                 <form class="d-flex" method="get" action="/search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"
@@ -58,26 +64,24 @@
                                 {{request.user}}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                <li><a class="dropdown-item active" href="#">Profile</a></li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/logout/">Logout</a></li>
-                            </ul>
-                        </div>
+                                <li><a class="dropdown-item active" href="/profile/{{user.username}}/">Profile</a></li>
                     </li>
+                    <li><a class="dropdown-item" href="/logout/">Logout</a></li>
                 </ul>
             </div>
-            {% else %}
-            <!-- Button to trigger login modal -->
-            <button type="button" class="btn btn-outline-success mx-2" data-bs-toggle="modal"
-                data-bs-target="#loginModal">
-                Login
-            </button>
-            <!-- Button to trigger signup modal -->
-            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signupModal">
-                Sign Up
-            </button>
-            {% endif %}
+            </li>
+            </ul>
+        </div>
+        {% else %}
+        <!-- Button to trigger login modal -->
+        <button type="button" class="btn btn-outline-success mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+        </button>
+        <!-- Button to trigger signup modal -->
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signupModal">
+            Sign Up
+        </button>
+        {% endif %}
         </div>
     </nav>
 
@@ -164,6 +168,49 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Dashboard Modal -->
+    <div class="container">
+        <form action="/dashboard/" method="post">
+            {% csrf_token %}
+            <div class="modal fade" id="dashboardModal" tabindex="-1" aria-labelledby="dashboardModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- <div class="modal-header">
+                    <h5 class="modal-title" id="dashboardModal">Dashboard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                        <div class="modal-body">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label">Password</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="password" id="inputPassword6" class="form-control"
+                                        aria-describedby="passwordHelpInline">
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-outline-success">Login</button>
+                                </div>
+                                <div class="col-1 mx-3">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <!-- <div class="col-auto">
+                                <span id="passwordHelpInline" class="form-text">
+                                    Must be 8-20 characters long.
+                                </span>
+                            </div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> -->
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
     {% block body %}
     {% endblock body %}

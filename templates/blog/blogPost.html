@@ -20,35 +20,33 @@
 <div class="container">
     <h2> Comments ({{comments.count}})</h2>
     <div class="my-2">
-    {% if user.is_authenticated %}
-    <form action="/blog/postComment/" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="exampleInputEmail1">Post Comment </label>
-            <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+        {% if user.is_authenticated %}
+        <form action="/blog/postComment/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">Post your Comment here</label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+            </div>
+            <input type="hidden" name="postSno" value="{{post.sno}}">
+            <button type="submit" class="btn btn-outline-success my-3">Submit</button>
+        </form>
+        {% else %}
+        Please login to post a comment 
+        {% endif %}
+    </div>
+    <div class="container">
+        {% for comment in comments %}
+        <div class="row my-3">
+            <div class="col-md-1  ">
+            <img class="rounded mx-auto d-block w-100 border border-dark p-2" src="/static/img/user.jpg"  alt="user">
+            </div>
+            <div class="col-md-11 "> 
+            <b> {{comment.user.username}} </b> <span class="badge badge-secondary text-dark">{{comment.timestamp| naturaltime}}</span>
+            <div>   {{comment.comment}} </div>
         </div>
-        <input type="hidden" name="postSno" value="{{post.sno}}">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    {% else %}
-    Please login to post a comment 
-    {% endif %}
-    
-    
-    </div>
-    {% for comment in comments %}
-    <div class="row my-3">
-        <div class="col-md-1  ">
-        <img class="rounded mx-auto d-block w-100 border border-dark p-2" src="/static/img/user.jpg"  alt="user">
         </div>
-        <div class="col-md-11 "> 
-        <b> {{comment.user.username}} </b> <span class="badge badge-secondary text-dark">{{comment.timestamp| naturaltime}}</span>
-        <div>   {{comment.comment}} </div>
+        {% endfor %}
     </div>
-    </div>
-    {% endfor %}
-
-    
 </div>
 
 <script>
