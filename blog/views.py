@@ -26,3 +26,6 @@ def postComment(request):
         messages.success(request, "Your comment has been posted successfully")
         
     return redirect(f"/blog/{post.slug}")
+
+def author(request):
+    return render(request,"blog/author.html")

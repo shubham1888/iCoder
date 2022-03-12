@@ -110,7 +110,10 @@ def dashboard(request):
 
 
 def profile(request,slug):
-    return render(request,"home/profile.html")
+    # post=Post.objects.filter(slug=slug).first()
+    postdata = Post.objects.filter(slug=slug)
+    context={'post':postdata}
+    return render(request,"home/profile.html",context)
 
 
 
