@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Write Blog{% endblock title %}
+{% block body %}
+{% if user.is_authenticated %}
+    <div class="container my-3">
+        <center><h2>Write your own blog here!</h2></center>
+        <form action="/blog/writeBlog/" method="post">
+            {% csrf_token %}
+            <label class="form-label">Title</label>
+            <div class="input-group my-2">
+                <input type="text" class="form-control" placeholder="Title" name="Title" aria-label="Title" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group my-2">
+                <input type="text" class="form-control" placeholder="Author" name="Author" value="{{request.user}}" aria-label="Author" aria-describedby="basic-addon1" hidden>
+            </div>
+            <label class="form-label">Content</label>
+            <div class="input-group">
+                <textarea class="form-control" aria-label="Content" name="Content" placeholder="Write your Content here!" cols="30" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-success my-3">Post Blog</button>
+        </form>
+    </div>
+{% else %}
+<a href="/login/">Login Please!</a>
+<br>
+<a href="/contact/">Any problem contact!</a>
+{% endif %}    
+{% endblock body %}

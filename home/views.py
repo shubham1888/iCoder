@@ -14,6 +14,7 @@ def home(request):
     context={'allPosts': allPosts}
     return render(request, "home/home.html",context)
 
+
 def contact(request):
     if request.method=="POST":
         name=request.POST['name']

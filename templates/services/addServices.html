@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Services{% endblock title %}
+{% block body %}
+{% if user.is_authenticated %}
+
+<div class="container my-3 py-2">
+    <center><h2>Add new Services here!</h2></center>
+    <form action="/services/addServices/" method="post">
+        {% csrf_token %}
+        <label class="form-label">Service Title</label>
+        <div class="input-group my-2">
+            <input type="text" class="form-control" placeholder="Service title" name="ServiceTitle" aria-label="Title" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group my-2">
+            <input type="text" class="form-control" placeholder="Author" name="Author" value="{{request.user}}" aria-label="Author" aria-describedby="basic-addon1" hidden>
+        </div>
+        <label class="form-label">Description</label>
+        <div class="input-group">
+            <textarea class="form-control" aria-label="Description" name="Description" placeholder="Write Code Description here!" cols="30" rows="5"></textarea>
+        </div>
+        <label class="form-label">Code</label>
+        <div class="input-group">
+            <textarea class="form-control" aria-label="Code" name="Code" placeholder="Write your Code here!" cols="30" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-success my-3">Add</button>
+    </form>
+</div>
+
+{% else %}
+<a href="/login/">Login Please!</a>
+<br>
+<a href="/contact/">Any problem contact!</a>
+{% endif %}
+{% endblock body %}        

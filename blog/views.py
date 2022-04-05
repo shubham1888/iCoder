@@ -2,12 +2,29 @@ from django.shortcuts import render, HttpResponse, redirect
 from blog.models import Post, BlogComment
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .models import Post
 
 # Create your views here.
-def blogHome(request): 
-    allPosts= Post.objects.all()
-    context={'allPosts': allPosts}
+
+
+def blogHome(request):
+    allPosts = Post.objects.all()
+    context = {'allPosts': allPosts}
     return render(request, "blog/blogHome.html", context)
+
+def writeBlog(request):
+    if request.method == "POST":
+        Title = request.POST['Title']
+        Author = request.POST['Author']
+        Content = request.POST['Content']
+        if len(Title) < 2 or len(Author) < 3 or len(Content) < 10:
+            messages.error(request, "Please fill the boxes correctly")
+        else:
+            writeBlogData = Post(title=Title, author=Author, content=Content)
+            writeBlogData.save()
+            messages.success(
+                request, "Your blog has been successfully posted")
+    return render(request, "blog/writeBlog.html")
 
 def blogPost(request, slug): 
     post=Post.objects.filter(slug=slug).first()

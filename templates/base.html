@@ -30,6 +30,10 @@
                             href="/home/">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% block serviceActive %}{% endblock serviceActive %}" aria-current="page"
+                            href="/services">Services</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% block aboutActive %}{% endblock aboutActive %}" aria-current="page"
                             href="/about">About</a>
                     </li>
@@ -43,8 +47,8 @@
                     </li>
                     <li class="nav-item">
                         {% if user.is_authenticated %}
-                            <a href="/profile/"><button type="button" class="btn btn-primary position-relative">
-                                    {{request.user}}
+                            <a href="/profile/"><button type="button" class="btn btn-dark position-relative">
+                                    Profile ( {{request.user}} )
                                     <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
                                     </span>
