@@ -3,6 +3,7 @@
 {% block title %}Blog Post{% endblock title %}
 {% block blogActive %}active{% endblock blogActive %}
 {% block body %}
+{% if user.is_authenticated %}
 <div class="container my-3">
     <button type="button" class="btn btn-dark py-2 px-3" onclick="goback()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
@@ -54,4 +55,9 @@
         window.history.back();
     }
 </script>
+{% else %}
+<a href="/login/">Login Please!</a>
+<br>
+<a href="/contact/">Any problem contact!</a>
+{% endif %}
 {% endblock body %}

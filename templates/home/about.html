@@ -2,4 +2,14 @@
 
 {% block title %}About{% endblock title %}
 {% block aboutActive %}active{% endblock aboutActive %}
-{% block body %}<h1>Under Development!</h1>{% endblock body %}
+{% block body %}
+{% if user.is_authenticated %}
+
+<h1>Under Development!</h1>
+
+{% else %}
+<a href="/login/">Login Please!</a>
+<br>
+<a href="/contact/">Any problem contact!</a>
+{% endif %}
+{% endblock body %}

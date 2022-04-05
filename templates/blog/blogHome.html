@@ -3,6 +3,7 @@
 {% block title %}Blog{% endblock title %}
 {% block blogActive %}active{% endblock blogActive %}
 {% block body %}
+{% if user.is_authenticated %}
     <div class="container my-3">
         <h2>Articles by iCoder</h2>
         {% for post in allPosts  %}
@@ -25,4 +26,9 @@
             </div>
         {% endfor %}
     </div>
+{% else %}
+<a href="/login/">Login Please!</a>
+<br>
+<a href="/contact/">Any problem contact!</a>
+{% endif %}    
 {% endblock body %}

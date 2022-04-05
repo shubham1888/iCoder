@@ -3,31 +3,49 @@
 {% block title %}Contact{% endblock title %}
 {% block contactActive %}active{% endblock contactActive %}
 {% block body %}
-<div class="container my-3">
-    <h3>Contact iCoder</h3>
-    <form action="/contact/" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" aria-describedby="name">
+<div class="container my-3 py-3">
+    <div class="row">
+        <div class="col-md-6 my-md-3">
+            <div class="row">
+                <center><h2>Lets talk about everything!</h2></center>
+            </div>
+            <div class="row">
+                <center><img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..." style="border-radius:50%;width:170px;"></center>
+            </div>
+            <div class="row">
+                <center><h2>Feel free to ask us anything!</h2></center>
+            </div>
+            <div class="row">
+                <center><p>Have doubt or suggestion to make? Feel free to ask anything. If you have any suggestions, please let me know. Your suggestions are highly appreciated. I appreciate your time and try hard to reply to every single message posted here! Keep dropping your priceless opinions.</p></center>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
+        <div class="col-md-6 my-md-3">
+            <h3>Contact iCoder</h3>
+            <form action="/contact/" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" placeholder="Username" class="form-control" id="username" name="name" aria-describedby="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
 
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone">
-        </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" placeholder="Phone" class="form-control" id="phone" name="phone">
+                    <small id="phoneHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+                </div>
 
-        <div class="form-group">
-            <label for="content">Describe your issue :</label>
-            <textarea class="form-control" name="content" id="content" cols="30" rows="5"></textarea>
+                <div class="form-group">
+                    <label for="content">Message</label>
+                    <textarea class="form-control" placeholder="Message" name="content" id="content" cols="30" rows="5"></textarea>
+                </div>
+                <center><button type="submit" class="btn btn-outline-success mt-3">Send Message</button></center>
+            </form>
         </div>
-
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
-    </form>
+    </div>
 </div>
 {% endblock body %}
