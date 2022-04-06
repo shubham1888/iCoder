@@ -1,6 +1,6 @@
 from email.message import Message
 from django.shortcuts import render, HttpResponse, redirect
-from home.models import Contact
+from home.models import Contact,ProfilePic
 from django.contrib import messages 
 from django.contrib.auth.models import User 
 from django.contrib.auth  import authenticate,login,logout
@@ -52,6 +52,7 @@ def handleSignUp(request):
         lname=request.POST['lname']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
+        profilePic=request.POST['profilePic']
 
         # check for errorneous input
         if len(username)>15:
@@ -70,6 +71,8 @@ def handleSignUp(request):
         myuser.first_name= fname
         myuser.last_name= lname
         myuser.save()
+        userprofilePic = ProfilePic(profilePic=profilePic)
+        userprofilePic.save()
         messages.success(request, " Your iCoder account has been successfully created")
         return redirect('/home/')
 

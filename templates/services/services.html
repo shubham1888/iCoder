@@ -1,28 +1,30 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %}Services{% endblock title %}
 {% block serviceActive %}active{% endblock serviceActive %}
 {% block body %}
 {% if user.is_authenticated %}
 
 <div class="container my-3 py-2">
-    <h2>Add Services here!</h2>
-    <a href="addServices/"><button type="button" class="btn btn-primary my-3">Add Services</button></a>
-    <hr>
-    <br>
-    <h2>Services by iCoder</h2>
+    {% comment %} {% if request.user == "shubham" %} {% endcomment %}
+        <h2>Add Services here!</h2>
+        <a href="addServices/"><button type="button" class="btn btn-primary my-3">Add Services</button></a>
+        <hr>
+        <br>
+    {% comment %} {% endif %} {% endcomment %}
+    <h2>Popular Services by iCoder</h2>
     {% for allServicesEachData in allServices  %}
             <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">Service by {{allServicesEachData.author}}</strong>
+                    <strong class="d-inline-block mb-2 text-primary">Article  by {{allServicesEachData.author}}</strong>
                     <h3 class="mb-0"><a class="text-dark" href="#">{{allServicesEachData.title}}</a></h3>
-                    <div class="mb-1 text-muted">{{allServicesEachData.timeStamp}}</div>
+                    <div class="mb-1 text-muted">{{allServicesEachData.timeStamp}} | {{allServicesEachData.timeStamp| naturaltime}}</div>
+                    <p class="card-text mb-auto">{{allServicesEachData.content| truncatechars:500}}</p>
                     <div class="mb-1 text-muted">{{allServicesEachData.description}}</div>
                     <div class="my-2">
-                        <a href="#" role="button" class="btn btn-primary">Code</a>
+                        <a href="#" role="button" class="btn btn-primary">Use</a>
                     </div>
                 </div>
-            </div>
         {% endfor %}
 </div>
 

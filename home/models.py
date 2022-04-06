@@ -4,6 +4,10 @@ from django.utils.timezone import now
 
 # Create your models here.
 
+class ProfilePic(models.Model):
+     profilePic = models.FileField(upload_to="profilePic/",max_length=250,null=True,default=None)
+     Time=models.DateTimeField(default=now)
+
 class Contact(models.Model):
      sno= models.AutoField(primary_key=True)
      name= models.CharField(max_length=255)

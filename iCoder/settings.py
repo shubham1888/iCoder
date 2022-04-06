@@ -139,6 +139,9 @@ MESSAGE_TAGS = {
     messages.SUCCESS:'success'
 }
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = "/media/"
 
 
 # code for heroku -->
