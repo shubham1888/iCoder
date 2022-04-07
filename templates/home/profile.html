@@ -4,7 +4,49 @@
 {% block body %}
 {% if user.is_authenticated %}
     <div class="container my-3">
-        <h1>Profile</h1>
+        <div class="row">
+            <div class="col-3">
+                <center>
+                    <img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..." style="border-radius:50%;width:170px;">
+                </center>
+            </div>
+            <div class="col-6">
+                <h2>{{user}}</h2>
+                <h5>{{user.email}}</h5>
+            </div>
+            <div class="col-2">
+                <a href="/logout/"><button type="button" class="btn btn-outline-success">Logout</button></a>
+                
+            </div>
+        </div>
+        <hr>
+        <div class="row my-2">
+            <div class="row">
+                <h4>Username : {{user.username}}</h4>
+            </div>
+            <div class="row">
+                <h4>Email : {{user.email}}</h4>
+            </div>
+            <div class="row">
+                <h4>First Name : {{user.first_name}}</h4>
+            </div>
+            <div class="row">
+                <h4>Last Name : {{user.last_name}}</h4>
+            </div>
+            <div class="row">
+                <h4>Id : {{user.id}}</h4>
+            </div>
+            <div class="row">
+                <h4>Date Joined : {{user.date_joined}}</h4>
+            </div>
+            <div class="row">
+                <h4>Last Login : {{user.last_login}}</h4>
+            </div>
+            <div class="row">
+                <center><a href="editProfile/"><button type="button" class="btn btn-outline-success">Edit</button></a></center>
+            </div>
+        </div>
+
     </div>
 {% else %}
 <a href="/login/">Login Please!</a>

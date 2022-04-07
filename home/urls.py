@@ -15,7 +15,8 @@ urlpatterns = [
     path('signup/', views.handleSignUp, name="handleSignUp"),
     path('login/', views.handeLogin, name="handleLogin"),
     path('logout/', views.handelLogout, name="handleLogout"),
-    path('profile/<str:slug>/', views.profile, name="profile"),
+    path('profile/', views.profile, name="profile"),
+    path('profile/editProfile/', views.editProfile, name="editProfile"),
 ]
 
 # if settings.DEBUG:
