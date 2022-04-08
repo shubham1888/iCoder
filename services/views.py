@@ -20,3 +20,6 @@ def addServices(request):
         messages.success(
             request, "Your new service has been successfully added")
     return render(request, "services/addServices.html")
+
+def qrcode(request): 
+    return render(request, "services/qrcodegenerator.html")

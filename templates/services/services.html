@@ -7,40 +7,55 @@
 
 <div class="container my-3 py-2">
     {% comment %} {% if request.user == "shubham" %} {% endcomment %}
-        <h2>Add Services here!</h2>
-        <a href="addServices/"><button type="button" class="btn btn-primary my-3">Add Services</button></a>
-        <hr>
-        <br>
+    <h2>Add Services here!</h2>
+    <a href="addServices/"><button type="button" class="btn btn-primary my-3">Add Services</button></a>
+    <hr>
+    <br>
     {% comment %} {% endif %} {% endcomment %}
     <h2>Popular Services by iCoder</h2>
-    {% for allServicesEachData in allServices  %}
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">Article  by {{allServicesEachData.author}}</strong>
-                    <h3 class="mb-0"><a class="text-dark" href="#">{{allServicesEachData.title}}</a></h3>
-                    <div class="mb-1 text-muted">{{allServicesEachData.timeStamp}} | {{allServicesEachData.timeStamp| naturaltime}}</div>
-                    <p class="card-text mb-auto">{{allServicesEachData.content| truncatechars:500}}</p>
-                    <div class="mb-1 text-muted">{{allServicesEachData.description}}</div>
-                    <div class="my-2">
-                        <a href="#" role="button" class="btn btn-primary">Use</a>
-                    </div>
-                </div>
+    <div
+        class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">Article by shubham</strong>
+            <h3 class="mb-0"><a class="text-dark" href="qrcode/">QRcode generator</a></h3>
+            <div class="mb-1 text-muted">This is an awesome QRcode generator used for generating text , links , etc. </div>
+            <div class="my-2">
+                <a href="qrcode/" role="button" class="btn btn-primary">Use</a>
+            </div>
+        </div>
+    </div>
+    {% for allServicesEachData in allServices %}
+    <div
+        class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">Article by {{allServicesEachData.author}}</strong>
+            <h3 class="mb-0"><a class="text-dark" href="#">{{allServicesEachData.title}}</a></h3>
+            <div class="mb-1 text-muted">{{allServicesEachData.timeStamp}} | {{allServicesEachData.timeStamp|
+                naturaltime}}</div>
+            <p class="card-text mb-auto">{{allServicesEachData.content| truncatechars:500}}</p>
+            <div class="mb-1 text-muted">{{allServicesEachData.description}}</div>
+            <div class="my-2">
+                <a href="#" role="button" class="btn btn-primary">Use</a>
+            </div>
+        </div>
         {% endfor %}
-</div>
+    </div>
 
-{% else %}
-<div class="container my-5 mx-5">
-    <center>
-        <div class="row">
-            <center><img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..." style="border-radius:50%;width:130px;"></center>
-        </div>
-        <div class="row">
-            <a href="/login/"><button type="submit" class="btn btn-outline-success my-3"> Login Please!</button></a>
-        </div>
-        <div class="row">
-            <a href="/contact/"><button type="submit" class="btn btn-outline-success my-3"> Any problem contact! </button></a>
-        </div>
-    </center>
-</div>
-{% endif %}
-{% endblock body %}        
+    {% else %}
+    <div class="container my-5 mx-5">
+        <center>
+            <div class="row">
+                <center><img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..."
+                        style="border-radius:50%;width:130px;"></center>
+            </div>
+            <div class="row">
+                <a href="/login/"><button type="submit" class="btn btn-outline-success my-3"> Login Please!</button></a>
+            </div>
+            <div class="row">
+                <a href="/contact/"><button type="submit" class="btn btn-outline-success my-3"> Any problem contact!
+                    </button></a>
+            </div>
+        </center>
+    </div>
+    {% endif %}
+    {% endblock body %}
