@@ -17,6 +17,8 @@ urlpatterns = [
     path('logout/', views.handelLogout, name="handleLogout"),
     path('profile/', views.profile, name="profile"),
     path('profile/editProfile/', views.editProfile, name="editProfile"),
+    path('profile/confirmdeleteaccount/', views.confirmdeleteaccount, name="confirmdeleteaccount"),
+    path('profile/confirmdeleteaccount/deleteaccount/', views.deleteaccount, name="deleteaccount"),
 ]
 
 # if settings.DEBUG:
