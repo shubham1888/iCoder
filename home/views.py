@@ -83,7 +83,7 @@ def handleSignUp(request):
         user=authenticate(username= username, password= pass1)
         if user is not None:
             login(request, user)
-            messages.success(request, f"Welcome Back {user}")
+            messages.success(request, f"Welcome Back @{user}")
             return redirect("/home/")
         else:
             messages.error(request, "Invalid credentials! Please try again")
@@ -102,7 +102,7 @@ def handeLogin(request):
         user=authenticate(username= username, password= password)
         if user is not None:
             login(request, user)
-            messages.success(request, f"Welcome Back {user}")
+            messages.success(request, f"Welcome Back @{user}")
             return redirect("/home/")
         else:
             messages.error(request, "Invalid credentials! Please try again")
@@ -135,7 +135,11 @@ def about(request):
 def profile(request):
     if request.user.is_authenticated:
         # post=Post.objects.filter(slug=slug).first()
-        return render(request,"home/profile.html")
+        allUsers=User.objects.all()
+        allUsersObj={
+            'allUsers':allUsers
+        }
+        return render(request,"home/profile.html",allUsersObj)
     else:
         return redirect('/login/')
 
@@ -164,10 +168,11 @@ def editProfile(request):
             
             # Update the user
             
-            messages.success(request, " Your iCoder account has been successfully updated")
+            messages.success(request, " Your iCoder account has successfully updated")
             return redirect('/profile/')
         else:
             # return render(request,'home/signup.html')
+            messages.error(request, " Your iCoder account has not updated")
             return render(request,"home/editProfile.html")
     else:
         return redirect('/login/')
