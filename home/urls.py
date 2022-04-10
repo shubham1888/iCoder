@@ -16,6 +16,7 @@ urlpatterns = [
     path('login/', views.handeLogin, name="handleLogin"),
     path('logout/', views.handelLogout, name="handleLogout"),
     path('profile/', views.profile, name="profile"),
+    path('profile/<slug>/', views.user, name="user"),
     path('profile/editProfile/', views.editProfile, name="editProfile"),
     path('profile/confirmdeleteaccount/', views.confirmdeleteaccount, name="confirmdeleteaccount"),
     path('profile/confirmdeleteaccount/deleteaccount/', views.deleteaccount, name="deleteaccount"),

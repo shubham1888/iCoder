@@ -10,9 +10,9 @@ from autoslug import AutoSlugField
 class Post(models.Model):
     sno=models.AutoField(primary_key=True)
     title=models.CharField(max_length=255)
-    author=models.CharField(max_length=20)
+    author=models.CharField(max_length=20,default=None)
     # slug=models.CharField(max_length=130)
-    SlugField = AutoSlugField(populate_from='title',unique=True,null=True,default=None)
+    slug = AutoSlugField(populate_from='title',unique=True,null=True,default=None)
     timeStamp=models.DateTimeField(default=now)
     content=models.TextField()
     # content=HTMLField()

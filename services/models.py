@@ -11,7 +11,7 @@ class addService(models.Model):
     title=models.CharField(max_length=255)
     author=models.CharField(max_length=20)
     # slug=models.CharField(max_length=130)
-    SlugField = AutoSlugField(populate_from='title',unique=True,null=True,default=None)
+    slug = AutoSlugField(populate_from='title',unique=True,null=True,default=None)
     timeStamp=models.DateTimeField(default=now)
     description=models.TextField()
     code=models.TextField()

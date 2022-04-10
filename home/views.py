@@ -1,6 +1,7 @@
 from email.message import Message
+from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect
-from home.models import Contact,ProfilePic
+from home.models import *
 from django.contrib import messages 
 from django.contrib.auth.models import User 
 from django.contrib.auth  import authenticate,login,logout
@@ -11,7 +12,7 @@ def index(request):
 
 def home(request): 
     if request.user.is_authenticated:
-        allPosts= Post.objects.all()
+        allPosts = Post.objects.all().order_by('-timeStamp')
         context={'allPosts': allPosts}
         return render(request, "home/home.html",context)
     else:
@@ -41,11 +42,13 @@ def search(request):
             allPostsTitle= Post.objects.filter(title__icontains=query)
             allPostsAuthor= Post.objects.filter(author__icontains=query)
             allPostsContent =Post.objects.filter(content__icontains=query)
-            allPosts=  allPostsTitle.union(allPostsContent, allPostsAuthor)
+            # allUser =User.objects.filter(username__icontains=query)
+            allPosts=  allPostsTitle.union(allPostsContent, allPostsAuthor,allPostsTitle)
         if allPosts.count()==0:
             messages.warning(request, "No search results found. Please refine your query.")
-        params={'allPosts': allPosts, 'query': query}
-        return render(request, 'home/search.html', params)
+        else:
+            context={'allPosts': allPosts, 'query': query}
+            return render(request, 'home/search.html', context)
     else:
         return redirect('/login/')
 
@@ -190,6 +193,13 @@ def deleteaccount(request):
         username = request.user
         User.objects.filter(username=username).delete()
         return HttpResponse(f'<h2>{username} your account has deleted</h2>')
+    else:
+        return redirect('/login/')
+
+def user(request,slug):
+    if request.user.is_authenticated:
+        user_slugObj={'user_slug':slug}
+        return render(request,'home/user.html',user_slugObj)
     else:
         return redirect('/login/')
 
