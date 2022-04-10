@@ -1,9 +1,10 @@
 from multiprocessing import context
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from blog.models import Post, BlogComment
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Post
+from django.urls import reverse
 
 # Create your views here.
 
@@ -20,13 +21,13 @@ def blogHome(request):
 def blogPost(request, slug): 
     if request.user.is_authenticated:
         post=Post.objects.filter(slug=slug).first()
-        comments= BlogComment.objects.filter(post=post)
+        comments= BlogComment.objects.filter(post=post).order_by('-timestamp')
         context={'post':post, 'comments': comments}
         return render(request, "blog/blogPost.html", context)
     else:
         return redirect('/login/')
 
-def postComment(request):
+def postComment(request,comment):
     if request.user.is_authenticated:
         if request.method == "POST":
             comment=request.POST.get('comment')
@@ -37,7 +38,10 @@ def postComment(request):
             comment.save()
             messages.success(request, "Your comment has been posted successfully")
             
-        return redirect(f"/blog/{post.slug}/")
+            return redirect(f"/blog/{post.slug}/")
+            # return HttpResponse('Your comment has posted <button>ok</button>')
+            # return redirect('blog/blogPost')
+            # return HttpResponseRedirect(request,reverse('blogPost'))
     else:
         return redirect('/login/')
 

@@ -1,5 +1,3 @@
-from email.message import Message
-from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect
 from home.models import *
 from django.contrib import messages 
@@ -8,7 +6,10 @@ from django.contrib.auth  import authenticate,login,logout
 from blog.models import Post
 
 def index(request): 
-    return redirect('login/')
+    if request.user.is_authenticated:
+        return redirect('/home/')
+    else:
+        return redirect('/login/')
 
 def home(request): 
     if request.user.is_authenticated:
@@ -17,7 +18,6 @@ def home(request):
         return render(request, "home/home.html",context)
     else:
         return redirect('/login/')
-
 
 def contact(request):
     if request.method=="POST":
@@ -42,7 +42,6 @@ def search(request):
             allPostsTitle= Post.objects.filter(title__icontains=query)
             allPostsAuthor= Post.objects.filter(author__icontains=query)
             allPostsContent =Post.objects.filter(content__icontains=query)
-            # allUser =User.objects.filter(username__icontains=query)
             allPosts=  allPostsTitle.union(allPostsContent, allPostsAuthor,allPostsTitle)
         if allPosts.count()==0:
             messages.warning(request, "No search results found. Please refine your query.")
@@ -95,10 +94,8 @@ def handleSignUp(request):
     else:
         return render(request,'home/signup.html')
 
-
 def handeLogin(request):
     if request.method=="POST":
-        # Get the post parameters
         username=request.POST['username']
         password=request.POST['password']
 
@@ -121,20 +118,6 @@ def handelLogout(request):
     else:
         return redirect('/login/')
 
-
-def about(request): 
-    if request.user.is_authenticated:
-        return render(request, "home/about.html")
-    else:
-        return redirect('/login/')
-
-
-# def profile(request,slug):
-#     # post=Post.objects.filter(slug=slug).first()
-#     postdata = Post.objects.filter(slug=slug)
-#     context={'post':postdata}
-#     return render(request,"home/profile.html",context)
-
 def profile(request):
     if request.user.is_authenticated:
         # post=Post.objects.filter(slug=slug).first()
@@ -143,40 +126,6 @@ def profile(request):
             'allUsers':allUsers
         }
         return render(request,"home/profile.html",allUsersObj)
-    else:
-        return redirect('/login/')
-
-def editProfile(request):
-    if request.user.is_authenticated:
-        # post=Post.objects.filter(slug=slug).first()
-        if request.method=="POST":
-            # Get the post parameters
-            newusername=request.POST['username']
-            newemail=request.POST['email']
-            newfname=request.POST['fname']
-            newlname=request.POST['lname']
-            newpass1=request.POST['pass1']
-            newpass2=request.POST['pass2']
-            # newprofilePic=request.POST['profilePic']
-
-            # check for errorneous input
-            if len(newusername)>15:
-                messages.error(request, " Your user name must be under 15 characters")
-
-            if not newusername.isalnum():
-                messages.error(request, " User name should only contain letters and numbers")
-
-            if (newpass1!= newpass2):
-                messages.error(request, " Passwords do not match")
-            
-            # Update the user
-            
-            messages.success(request, " Your iCoder account has successfully updated")
-            return redirect('/profile/')
-        else:
-            # return render(request,'home/signup.html')
-            messages.error(request, " Your iCoder account has not updated")
-            return render(request,"home/editProfile.html")
     else:
         return redirect('/login/')
 
@@ -196,13 +145,29 @@ def deleteaccount(request):
     else:
         return redirect('/login/')
 
-def user(request,slug):
+def username(request,username):
     if request.user.is_authenticated:
-        user_slugObj={'user_slug':slug}
+        user = User.objects.filter(username=username).first()
+        user_slugObj={'user_slug':user}
         return render(request,'home/user.html',user_slugObj)
     else:
         return redirect('/login/')
 
+def changepassword(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            # Get the post parameters
+            oldpassword=request.POST['oldpassword']
+            newpassword=request.POST['newpassword']
+            if (oldpassword!= newpassword):
+                messages.error(request, " Passwords do not match")
+            else:
+                user = User.objects.filter(username=request.user).first()
+                user.set_password(newpassword)
+                user.save()
+            return redirect('/profile/')
+    else:
+        return redirect('/login/')
 
 # obj = get_object_or_404(modelname, name=name)
 # obj.delete()

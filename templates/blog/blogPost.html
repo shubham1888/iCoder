@@ -6,15 +6,18 @@
 {% if user.is_authenticated %}
 <div class="container my-3">
     <button type="button" class="btn btn-dark py-2 px-3" onclick="goback()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path
+                d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
         </svg>
     </button>
-    
+
 </div>
 <div class="container my-3">
     <h2 class="blog-post-title">{{post.title}}</h2>
-    <p class="blog-post-meta">{{post.timeStamp}} | <b> {{post.timeStamp| naturaltime}} </b> by <a href="/profile/{{post.author}}/">@{{post.author}}</a></p>
+    <p class="blog-post-meta">{{post.timeStamp}} | <b> {{post.timeStamp| naturaltime}} </b> by <a
+            href="/profile/{{post.author}}/">@{{post.author}}</a></p>
     <p>{{post.content}}</p>
     <hr>
 </div>
@@ -32,49 +35,54 @@
             <button type="submit" class="btn btn-outline-success my-3">Submit</button>
         </form>
         {% else %}
-        Please login to post a comment 
+        Please login to post a comment
         {% endif %}
     </div>
     <div class="container">
         {% for comment in comments %}
         <div class="row my-3">
-            <div class="col-md-1  ">
-            <img class="rounded mx-auto d-block w-100 border border-dark p-2" src="/static/img/user.jpg"  alt="user">
+            <div class="col-1">
+                <img src="/static/img/user.png" class="img-thumbnail" alt="..." style="border-radius:50%;width: 90px;">
             </div>
-            <div class="col-md-11 "> 
-            <b> {{comment.user.username}} </b> <span class="badge badge-secondary text-dark">{{comment.timestamp| naturaltime}}</span>
-            <div>   {{comment.comment}} </div>
+            <div class="col-10">
+                <b><a href="/profile/{{comment.user.username}}" class="text-blue">@{{comment.user.username}}<a></b>
+                <span class="badge badge-secondary text-dark">{{comment.timestamp| naturaltime}}</span>
+                <div>{{comment.comment}}</div>
+            </div>
         </div>
-        </div>
+        <hr>
         {% endfor %}
+        <center>
+            <button type="button" class="btn btn-dark py-2 px-3 my-5" onclick="goback()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                </svg>Back
+            </button>
+        </center>
     </div>
-    <center>
-        <button type="button" class="btn btn-dark py-2 px-3 my-5" onclick="goback()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-            </svg>Back
-        </button>
-    </center>
-</div>
 
-<script>
-    function goback(){
-        window.history.back();
-    }
-</script>
-{% else %}
-<div class="container my-5 mx-5">
-    <center>
-        <div class="row">
-            <center><img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..." style="border-radius:50%;width:130px;"></center>
-        </div>
-        <div class="row">
-            <a href="/login/"><button type="submit" class="btn btn-outline-success my-3"> Login Please!</button></a>
-        </div>
-        <div class="row">
-            <a href="/contact/"><button type="submit" class="btn btn-outline-success my-3"> Any problem contact! </button></a>
-        </div>
-    </center>
-</div>
-{% endif %}
-{% endblock body %}
+    <script>
+        function goback() {
+            window.history.back();
+        }
+    </script>
+    {% else %}
+    <div class="container my-5 mx-5">
+        <center>
+            <div class="row">
+                <center><img src="/static/img/shubham.jpg" class="img-thumbnail" alt="..."
+                        style="border-radius:50%;width:130px;"></center>
+            </div>
+            <div class="row">
+                <a href="/login/"><button type="submit" class="btn btn-outline-success my-3"> Login Please!</button></a>
+            </div>
+            <div class="row">
+                <a href="/contact/"><button type="submit" class="btn btn-outline-success my-3"> Any problem contact!
+                    </button></a>
+            </div>
+        </center>
+    </div>
+    {% endif %}
+    {% endblock body %}
