@@ -8,6 +8,22 @@ from django.urls import reverse
 
 # Create your views here.
 
+def writeBlog(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            Title = request.POST['Title']
+            Author = request.POST['Author']
+            Content = request.POST['Content']
+            if len(Title) < 2 or len(Author) < 3 or len(Content) < 10:
+                messages.error(request, "Please fill the boxes correctly")
+            else:
+                writeBlogData = Post(title=Title, author=Author, content=Content)
+                writeBlogData.save()
+                messages.success(
+                    request, "Your blog has been successfully posted")
+        return render(request, "blog/writeBlog.html")
+    else:
+        return redirect('/login/')
 
 def blogHome(request):
     if request.user.is_authenticated:
@@ -27,7 +43,7 @@ def blogPost(request, slug):
     else:
         return redirect('/login/')
 
-def postComment(request,comment):
+def postComment(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             comment=request.POST.get('comment')
@@ -37,27 +53,6 @@ def postComment(request,comment):
             comment=BlogComment(comment= comment, user=user, post=post)
             comment.save()
             messages.success(request, "Your comment has been posted successfully")
-            
-            return redirect(f"/blog/{post.slug}/")
-            # return HttpResponse('Your comment has posted <button>ok</button>')
-            # return redirect('blog/blogPost')
-            # return HttpResponseRedirect(request,reverse('blogPost'))
-    else:
-        return redirect('/login/')
-
-def writeBlog(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            Title = request.POST['Title']
-            Author = request.POST['Author']
-            Content = request.POST['Content']
-            if len(Title) < 2 or len(Author) < 3 or len(Content) < 10:
-                messages.error(request, "Please fill the boxes correctly")
-            else:
-                writeBlogData = Post(title=Title, author=Author, content=Content)
-                writeBlogData.save()
-                messages.success(
-                    request, "Your blog has been successfully posted")
-        return render(request, "blog/writeBlog.html")
+        return redirect(f"/blog/{post.slug}/")
     else:
         return redirect('/login/')

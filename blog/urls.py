@@ -3,8 +3,8 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('writeBlog/', views.writeBlog, name="writeBlog"),
     path('', views.blogHome, name="bloghome"),
     path('<str:slug>/', views.blogPost, name="blogPost"),
-    path('postComment/', views.postComment, name="postComment"),
-    path('writeBlog/', views.writeBlog, name="writeBlog"),
+    path('/blog/postComment/', views.postComment, name="postComment"),
 ]
