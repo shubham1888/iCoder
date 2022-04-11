@@ -77,18 +77,14 @@
             <table class="table table-dark table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Email</th>
                         <th scope="col">Last Login</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for users in allUsers %}
                     <tr>
-                        <th scope="row"><a href="{{users}}" class="text-light">{{users.id}}<a></th>
                         <td><a href="{{users}}" class="text-light">@{{users}}<a></td>
-                        <td><a href="{{users}}" class="text-light">{{users.email}}<a></td>
                         <td><a href="{{users}}" class="text-light">{{users.last_login | naturaltime}}<a></td>
                     </tr>
                     {% endfor %}
