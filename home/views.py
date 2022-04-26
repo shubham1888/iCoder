@@ -43,10 +43,19 @@ def search(request):
             allPostsAuthor= Post.objects.filter(author__icontains=query)
             allPostsContent =Post.objects.filter(content__icontains=query)
             allPosts=  allPostsTitle.union(allPostsContent, allPostsAuthor,allPostsTitle)
+            profile=''
+            try:
+                profile = User.objects.get(username=query)
+            except:
+                print(f'User {query} not found')
         if allPosts.count()==0:
             messages.warning(request, "No search results found. Please refine your query.")
         else:
-            context={'allPosts': allPosts, 'query': query}
+            context={
+                'allPosts': allPosts,
+                'query': query,
+                'profile': profile,
+            }
             return render(request, 'home/search.html', context)
     else:
         return redirect('/login/')
@@ -82,11 +91,10 @@ def handleSignUp(request):
         myuser.save()
         userprofilePic = ProfilePic(profilePic=profilePic)
         userprofilePic.save()
-        messages.success(request, " Your iCoder account has been successfully created")
+        messages.success(request, "Your account has been successfully created")
         user=authenticate(username= username, password= pass1)
         if user is not None:
             login(request, user)
-            messages.success(request, f"Welcome Back @{user}")
             return redirect("/home/")
         else:
             messages.error(request, "Invalid credentials! Please try again")
@@ -166,6 +174,15 @@ def changepassword(request):
                 user = User.objects.filter(username=request.user).first()
                 user.set_password(newpassword)
                 user.save()
+            return redirect('/profile/')
+    else:
+        return redirect('/login/')
+
+def addtodo(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            todotitle=request.POST['todotitle']
+            todoDescription=request.POST['todoDescription']
             return redirect('/profile/')
     else:
         return redirect('/login/')

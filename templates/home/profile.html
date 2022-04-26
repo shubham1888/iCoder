@@ -44,6 +44,36 @@
             <h4>Last Login : {{user.last_login}} | <span style="color:blue;">{{user.last_login | naturaltime}}</span>
             </h4>
         </div>
+        <hr>
+        <div class="my-3">
+            <form action="addtodo/" method="post">
+                {% csrf_token %}
+                <h2>Simple Todo :</h2>
+                <div class="row-auto my-2">
+                    <label class="row-form-label"><b>Add Todo</b></label>
+                </div>
+                <div class="row-auto my-2">
+                    <div class="col-md-10">
+                        <input type="text" id="todotitle" name="todotitle" placeholder="Title"
+                            class="form-control" aria-describedby="textHelpInline">
+                    </div>
+                </div>
+                <div class="row-auto my-2">
+                    <div class="col-md-10">
+                        <textarea class="form-control" aria-label="Content" name="todoDescription" placeholder="Description" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="row-auto my-2">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-outline-success">Add &plus;</button>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <p>Your to do</p>
+                </div>
+            </form>
+        </div>
+        <hr>
         <div class="row my-3 px-3">
             <form action="/profile/changepassword/" method="post">
                 {% csrf_token %}

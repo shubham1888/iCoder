@@ -6,5 +6,5 @@ urlpatterns = [
     path('writeBlog/', views.writeBlog, name="writeBlog"),
     path('', views.blogHome, name="bloghome"),
     path('<str:slug>/', views.blogPost, name="blogPost"),
-    path('/blog/postComment/', views.postComment, name="postComment"),
+    path('?', views.postComment, name="postComment"),
 ]
